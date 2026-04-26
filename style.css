@@ -1,0 +1,284 @@
+/* ===== Global Styles & Reset (Retained Colors and Fonts) ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* HIGH-CONTRAST CYBER PALETTE (Retained) */
+    --color-dark-bg: #0d1117;     
+    --color-card-bg: #161b22;     
+    --color-accent-green: #39FF14; 
+    --color-accent-blue: #007FFF;  
+    --color-text-light: #c9d1d9;   
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--color-dark-bg);
+    background-image: linear-gradient(0deg, transparent 9px, rgba(57, 255, 20, 0.1) 10px),
+                      linear-gradient(90deg, transparent 9px, rgba(57, 255, 20, 0.1) 10px);
+    background-size: 10px 10px;
+    color: var(--color-text-light);
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    padding: 20px;
+}
+
+/* ===== Main Container Styling (The 'Terminal Window') ===== */
+.checker-container {
+    width: 100%;
+    max-width: 650px; 
+    padding: 0 50px 50px 50px; 
+    border-radius: 15px;
+    background: var(--color-card-bg);
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.2), 
+                0 0 40px rgba(0, 127, 255, 0.1);
+    border: 1px solid #30363d; 
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.checker-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.4), 
+                0 0 60px rgba(0, 127, 255, 0.2);
+}
+
+/* ===== Top Ribbon Styling (Retained) ===== */
+.top-ribbon {
+    background-color: var(--color-accent-blue);
+    color: var(--color-dark-bg); 
+    padding: 12px 20px;
+    margin: 0 -50px 30px -50px; 
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-bottom: 3px solid var(--color-accent-green);
+    display: flex;
+    justify-content: space-between;
+}
+
+.top-ribbon span i {
+    margin-right: 10px;
+    color: var(--color-accent-green); 
+}
+
+.ribbon-status {
+    color: var(--color-dark-bg);
+}
+
+/* ===== Header (Title/Tagline) ===== */
+.header {
+    margin-top: 40px; 
+    margin-bottom: 40px;
+    text-align: center;
+    border-bottom: 2px solid var(--color-accent-green);
+    padding-bottom: 20px;
+}
+
+.main-title {
+    color: var(--color-accent-green); 
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    margin-bottom: 5px;
+    letter-spacing: 1px; 
+}
+
+.main-title i {
+    margin-right: 15px;
+    color: var(--color-accent-blue);
+}
+
+.tagline {
+    color: #8b949e;
+    font-size: 17px;
+    font-weight: 400;
+    font-style: italic;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ===== Input Section (Combined with Strength Bar) ===== */
+.input-section label {
+    display: block;
+    margin: 30px 0 12px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text-light);
+    text-align: left;
+}
+.input-section label i {
+    color: var(--color-accent-blue);
+    margin-right: 8px;
+}
+
+.input-group {
+    display: flex;
+    align-items: stretch;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+}
+
+.input-group:focus-within {
+    border-color: var(--color-accent-green);
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5); 
+}
+
+#password {
+    border: none;
+    outline: none;
+    padding: 18px 20px;
+    width: 100%;
+    font-size: 20px;
+    color: var(--color-accent-green); 
+    background: var(--color-dark-bg); 
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 400;
+}
+
+#password::placeholder {
+    color: #4a5460;
+}
+
+#toggle-password {
+    background: #21262d; 
+    color: var(--color-accent-blue);
+    border: none;
+    padding: 0 18px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-size: 18px;
+    line-height: 1;
+}
+
+#toggle-password:hover {
+    background: #30363d;
+    color: var(--color-accent-green); 
+}
+
+/* ===== Password Strength Bar (Combined Group) ===== */
+.strength-bar-group {
+    margin-top: 25px;
+    margin-bottom: 25px; 
+}
+
+.strength-bar-group label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-accent-blue); 
+}
+.strength-bar-group label i {
+    margin-right: 8px;
+}
+
+.power-container {
+    background-color: #21262d;
+    width: 100%;
+    height: 20px; 
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+#power-point {
+    background-color: #D73F40; 
+    width: 1%;
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.8s cubic-bezier(.4,0,.2,1),
+                background-color 0.4s ease;
+}
+
+/* ===== Results Section (NEW LAYOUT: Suggestions Right, Crack Time Bottom) ===== */
+.results-section {
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 2px solid #30363d;
+    text-align: left;
+    
+    display: grid;
+    /* Create two columns: 1.5fr for the placeholder/empty area, 2fr for suggestions */
+    grid-template-columns: 1.5fr 2fr; 
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+        "placeholder suggestions" 
+        "crack-time crack-time"; 
+    gap: 20px;
+}
+
+.results-left-placeholder {
+    grid-area: placeholder;
+    /* This element occupies the space, forcing suggestions to the right */
+}
+
+/* Suggestions Box (Positioned in the top right of the grid) */
+.suggestions-box {
+    grid-area: suggestions;
+    background-color: #0d1117; 
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 100px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#suggestion {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    font-weight: 400;
+    white-space: pre-wrap;
+}
+
+#suggestion strong {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-accent-green); 
+}
+
+/* Crack Time Estimate (Spans the full bottom row) */
+.crack-time-box {
+    grid-area: crack-time;
+    padding: 15px 20px;
+    border-radius: 8px;
+    background-color: rgba(57, 255, 20, 0.1); 
+    border-left: 5px solid var(--color-accent-green);
+}
+
+#crack-time {
+    font-family: 'Roboto Mono', monospace;
+    color: var(--color-accent-green);
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+}
+/* ===== Air University Background Logo ===== */
+body::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 500px;              /* Resize logo */
+    height: 500px;
+    transform: translate(-50%, -50%);
+    background-image: url('air_logo.png'); /* ← Put your logo file name here */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.06;             /* Light watermark */
+    pointer-events: none;      /* Don’t block clicks */
+    z-index: 0;
+}
