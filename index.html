@@ -1,17 +1,434 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Password Checker</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title> CyberGuard - Password Security Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="new1.css" />
 </head>
-<body>
 
-<h2>Password Strength Checker</h2>
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
 
-<input type="password" id="password" placeholder="Enter password">
-<p id="strength"></p>
+  <!-- HEADER -->
+  <header class="border-b border-cyan-500/30 bg-slate-950/90 backdrop-blur-xl sticky top-0 z-20">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div
+          class="h-10 w-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-fuchsia-500 flex items-center justify-center neon-border">
+          <i class="fa-solid fa-shield-halved text-xl text-slate-950"></i>
+        </div>
+        <div>
+          <h1 class="text-xl md:text-2xl font-extrabold tracking-widest uppercase">
+            <span class="bg-gradient-to-r from-cyan-400 via-sky-400 to-fuchsia-400 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(56,189,248,0.3)]">
+              <i class="fa-solid fa-shield mr-2"></i>CyberGuard
+            </span>
+          </h1>
+          <p class="text-xs text-slate-400 uppercase tracking-[0.2em]">
+            <i class="fa-solid fa-bolt mr-1"></i>Hyper-Interactive Password Sentinel
+          </p>
+        </div>
+      </div>
 
-<script src="script.js"></script>
+      <!-- NAV -->
+      <nav class="flex gap-6 text-sm font-medium">
+        <button data-view="home" class="nav-link text-cyan-400 nav-active hover:scale-105 transition-transform">
+          <i class="fa-solid fa-home mr-1"></i>Home
+        </button>
+        <button data-view="reviews" class="nav-link text-slate-300 hover:text-cyan-400 hover:scale-105 transition-transform">
+          <i class="fa-solid fa-comments mr-1"></i>Reviews
+        </button>
+        <button data-view="about" class="nav-link text-slate-300 hover:text-cyan-400 hover:scale-105 transition-transform">
+          <i class="fa-solid fa-bullseye mr-1"></i>About
+        </button>
+        <button data-view="faq" class="nav-link text-slate-300 hover:text-cyan-400 hover:scale-105 transition-transform">
+          <i class="fa-solid fa-circle-question mr-1"></i>FAQ
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1">
+    <div class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+
+      <!-- ================= HOME ================= -->
+      <section id="view-home" class="view-section">
+
+        <div class="grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-8 items-start">
+
+          <!-- LEFT PANEL -->
+          <div class="glass-panel rounded-2xl p-6 border border-slate-700/60">
+            <div class="flex items-center justify-between mb-5">
+              <h2 class="text-lg font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-lock text-cyan-400"></i>
+                Real-Time Password Scanner
+              </h2>
+              <span class="text-xs bg-cyan-900/30 text-cyan-300 px-2 py-1 rounded-full border border-cyan-500/30">
+                <i class="fa-solid fa-bolt mr-1"></i>LIVE ANALYSIS
+              </span>
+            </div>
+
+            <!-- PASSWORD -->
+            <label class="text-xs font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-key text-cyan-400 text-xs"></i>
+              Password Input
+            </label>
+            <div class="relative mb-4">
+              <input id="passwordInput" type="password"
+                class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 py-2.5 pr-10 text-sm focus:border-cyan-500/50 transition-colors"
+                placeholder="Type password to analyze...">
+              <button id="toggleVisibility"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-cyan-400 transition-colors">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+
+            <!-- STRENGTH -->
+            <div class="mb-5">
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-slate-400 flex items-center gap-1">
+                  <i class="fa-solid fa-chart-line"></i>
+                  Strength Meter
+                </span>
+                <span id="strengthLabel" class="text-cyan-400 font-semibold flex items-center gap-1">
+                  <i class="fa-solid fa-shield"></i>
+                  <span>Waiting...</span>
+                </span>
+              </div>
+              <div class="h-3 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+                <div id="strengthBar" class="h-full w-0 bg-gradient-to-r from-red-500 via-orange-500 to-green-500 transition-all duration-500"></div>
+              </div>
+            </div>
+
+            <!-- VULNERABILITIES -->
+            <div class="mb-6">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="text-xs font-semibold flex items-center gap-1">
+                  <i class="fa-solid fa-bug text-red-400"></i>
+                  Potential Vulnerabilities
+                </h3>
+                <span id="vulnerabilityCount" class="text-xs bg-red-900/30 text-red-300 px-2 py-1 rounded-full">
+                  0 detected
+                </span>
+              </div>
+              <div id="vulnerabilityList" class="space-y-2 text-xs">
+                <div class="p-3 rounded-xl bg-slate-900/50 border border-slate-700/50 vulnerability-item">
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-300 flex items-center gap-2">
+                      <i class="fa-solid fa-circle-info text-cyan-400"></i>
+                      Start typing to detect vulnerabilities...
+                    </span>
+                    <span class="text-green-400 text-xs font-semibold">
+                      <i class="fa-solid fa-check"></i> None
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- METRICS -->
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+              <div class="rounded-xl bg-slate-900/70 border border-slate-700 p-3 hover:border-cyan-500/30 transition-colors">
+                <p class="text-xs text-slate-400 flex items-center gap-1 mb-1">
+                  <i class="fa-solid fa-clock"></i>
+                  Estimated Crack Time
+                </p>
+                <p id="crackTime" class="text-sm font-semibold text-cyan-300">—</p>
+              </div>
+              <div class="rounded-xl bg-slate-900/70 border border-slate-700 p-3 hover:border-fuchsia-500/30 transition-colors">
+                <p class="text-xs text-slate-400 flex items-center gap-1 mb-1">
+                  <i class="fa-solid fa-calculator"></i>
+                  Search Space
+                </p>
+                <p id="searchSpace" class="text-sm font-semibold text-fuchsia-300">—</p>
+              </div>
+            </div>
+
+            <!-- SUGGESTIONS -->
+            <div>
+              <p class="text-xs text-slate-400 mb-2 flex items-center gap-1">
+                <i class="fa-solid fa-lightbulb text-yellow-400"></i>
+                Security Suggestions
+              </p>
+              <ul id="suggestionList" class="space-y-1.5 text-xs">
+                <li class="text-slate-400 flex items-start gap-2">
+                  <i class="fa-solid fa-circle-info text-cyan-400 mt-0.5"></i>
+                  <span>Start typing to get suggestions.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- RIGHT PANEL -->
+          <div class="glass-panel rounded-2xl p-6 border border-slate-700">
+            <h2 class="text-lg font-semibold mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-shield text-cyan-400"></i>
+              CyberGuard Insights
+            </h2>
+
+            <ul class="text-sm space-y-2 mb-6">
+              <li class="flex items-center gap-2">
+                <i class="fa-solid fa-check text-green-400"></i>
+                <span>Analyzes password strength</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="fa-solid fa-check text-green-400"></i>
+                <span>Detects vulnerabilities</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="fa-solid fa-check text-green-400"></i>
+                <span>Estimates crack time</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="fa-solid fa-check text-green-400"></i>
+                <span>Calculates search space</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="fa-solid fa-check text-green-400"></i>
+                <span>Gives real-time suggestions</span>
+              </li>
+            </ul>
+
+            <div class="bg-slate-900/70 border border-slate-700 rounded-xl p-4 hover:border-cyan-500/30 transition-colors">
+              <h3 class="text-sm text-cyan-300 mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-star text-yellow-400"></i>
+                Security Tip
+              </h3>
+              <p class="text-xs">
+                Use at least <b class="text-cyan-300">12 characters</b> including uppercase, lowercase, numbers, and symbols for maximum security.
+              </p>
+            </div>
+
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= REVIEWS ================= -->
+      <section id="view-reviews" class="view-section hidden glass-panel p-6 rounded-2xl border border-slate-700">
+        <h2 class="text-lg font-semibold mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-comments text-cyan-400"></i>
+          User Reviews
+        </h2>
+        <textarea id="reviewInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 mb-3 focus:border-cyan-500/50 transition-colors"
+          placeholder="Write your review about CyberGuard..."></textarea>
+        <button id="submitReview" class="bg-gradient-to-r from-cyan-600 to-blue-600 px-4 py-2 rounded-lg mb-4 hover:from-cyan-700 hover:to-blue-700 transition-all">
+          <i class="fa-solid fa-paper-plane mr-2"></i>Submit Review
+        </button>
+        <ul id="reviewList" class="space-y-3">
+          <li class="bg-slate-900/50 border border-slate-700 rounded-xl p-3">
+            <div class="flex items-center gap-2 mb-2">
+              <i class="fa-solid fa-user-circle text-cyan-400"></i>
+              <span class="text-sm font-semibold">Babar Azam</span>
+              <span class="text-xs text-slate-500 ml-auto">2 days ago</span>
+            </div>
+            <p class="text-sm text-slate-300">"This tool helped me secure all my accounts! The vulnerability detection is amazing."</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ================= ABOUT ================= -->
+      <section id="view-about" class="view-section hidden glass-panel p-6 rounded-2xl border border-slate-700">
+        <h2 class="text-lg font-semibold mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-bullseye text-cyan-400"></i>
+          About CyberGuard
+        </h2>
+        <p class="text-sm mb-6">
+          CyberGuard is an advanced educational tool designed to teach password safety, strength evaluation and digital security awareness through real-time analysis and interactive features.
+        </p>
+        
+        <!-- Social Media Links -->
+        <div class="mt-6 pt-6 border-t border-slate-700/50">
+          <h3 class="text-sm font-semibold mb-4 text-cyan-300">
+            <i class="fa-solid fa-share-nodes mr-2"></i>Connect With Us
+          </h3>
+          <div class="grid grid-cols-3 sm:grid-cols-6 gap-4">
+            <!-- Twitter/X -->
+            <a href="https://x.com/CyberGuardOfficial" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center">
+              <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/70 group-hover:bg-slate-800 transition-all duration-300 group-hover:scale-105">
+                <i class="fab fa-twitter text-2xl text-slate-300 group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]"></i>
+              </div>
+              <span class="text-xs mt-2 text-slate-400 group-hover:text-cyan-300 font-medium">Twitter/X</span>
+            </a>
+            
+            <!-- GitHub -->
+            <a href="https://github.com/CyberGuardSecurity" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center">
+              <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/70 group-hover:bg-slate-800 transition-all duration-300 group-hover:scale-105">
+                <i class="fab fa-github text-2xl text-slate-300 group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]"></i>
+              </div>
+              <span class="text-xs mt-2 text-slate-400 group-hover:text-cyan-300 font-medium">GitHub</span>
+            </a>
+            
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com/company/cyberguard-security" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center">
+              <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/70 group-hover:bg-slate-800 transition-all duration-300 group-hover:scale-105">
+                <i class="fab fa-linkedin-in text-2xl text-slate-300 group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]"></i>
+              </div>
+              <span class="text-xs mt-2 text-slate-400 group-hover:text-cyan-300 font-medium">LinkedIn</span>
+            </a>
+            
+            <!-- Discord -->
+            <a href="https://discord.gg/cyberguard" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center">
+              <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/70 group-hover:bg-slate-800 transition-all duration-300 group-hover:scale-105">
+                <i class="fab fa-discord text-2xl text-slate-300 group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]"></i>
+              </div>
+              <span class="text-xs mt-2 text-slate-400 group-hover:text-cyan-300 font-medium">Discord</span>
+            </a>
+            
+            <!-- YouTube -->
+            <a href="https://youtube.com/@CyberGuardSecurity" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center">
+              <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/70 group-hover:bg-slate-800 transition-all duration-300 group-hover:scale-105">
+                <i class="fab fa-youtube text-2xl text-slate-300 group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]"></i>
+              </div>
+              <span class="text-xs mt-2 text-slate-400 group-hover:text-cyan-300 font-medium">YouTube</span>
+            </a>
+            
+            <!-- Instagram -->
+            <a href="https://instagram.com/CyberGuard.Offical" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center">
+              <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/70 group-hover:bg-slate-800 transition-all duration-300 group-hover:scale-105">
+                <i class="fab fa-instagram text-2xl text-slate-300 group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]"></i>
+              </div>
+              <span class="text-xs mt-2 text-slate-400 group-hover:text-cyan-300 font-medium">Instagram</span>
+            </a>
+          </div>
+          
+          <p class="text-xs text-slate-500 mt-6 text-center italic">
+            Note: These are demo links that will open actual social media platforms but show "account not found" as CyberGuard is a demo project.
+          </p>
+        </div>
+      </section>
+
+      <!-- ================= FAQ ================= -->
+      <section id="view-faq" class="view-section hidden glass-panel p-6 rounded-2xl border border-slate-700">
+        <h2 class="text-lg font-semibold mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-circle-question text-cyan-400"></i>
+          Frequently Asked Questions
+        </h2>
+        
+        <!-- FAQ Categories -->
+        <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
+          <button class="faq-category-btn bg-cyan-900/30 text-cyan-300 px-3 py-1 rounded-lg text-xs border border-cyan-500/30" data-category="all">
+            <i class="fa-solid fa-globe mr-1"></i>All Questions
+          </button>
+          <button class="faq-category-btn bg-slate-800/50 text-slate-300 px-3 py-1 rounded-lg text-xs border border-slate-700 hover:border-cyan-500/30" data-category="security">
+            <i class="fa-solid fa-shield mr-1"></i>Security
+          </button>
+          <button class="faq-category-btn bg-slate-800/50 text-slate-300 px-3 py-1 rounded-lg text-xs border border-slate-700 hover:border-cyan-500/30" data-category="features">
+            <i class="fa-solid fa-star mr-1"></i>Features
+          </button>
+          <button class="faq-category-btn bg-slate-800/50 text-slate-300 px-3 py-1 rounded-lg text-xs border border-slate-700 hover:border-cyan-500/30" data-category="general">
+            <i class="fa-solid fa-circle-info mr-1"></i>General
+          </button>
+        </div>
+
+        <!-- FAQ List -->
+        <div id="faqList" class="space-y-3 mb-6">
+          <!-- Predefined FAQ Items -->
+          <div class="faq-item bg-slate-900/50 border border-slate-700 rounded-xl p-3" data-category="security">
+            <div class="flex items-center gap-2 mb-1 cursor-pointer faq-question">
+              <i class="fa-solid fa-question text-fuchsia-400"></i>
+              <span class="text-xs font-semibold">Q: What makes a password strong?</span>
+              <i class="fa-solid fa-chevron-down text-cyan-400 ml-auto text-xs"></i>
+            </div>
+            <div class="faq-answer text-sm text-slate-300 mt-2 hidden">
+              <i class="fa-solid fa-robot text-cyan-400 mr-1"></i>
+              A strong password should have at least 12 characters, include uppercase and lowercase letters, numbers, and special symbols. Avoid using personal information or common words.
+            </div>
+          </div>
+
+          <div class="faq-item bg-slate-900/50 border border-slate-700 rounded-xl p-3" data-category="features">
+            <div class="flex items-center gap-2 mb-1 cursor-pointer faq-question">
+              <i class="fa-solid fa-question text-fuchsia-400"></i>
+              <span class="text-xs font-semibold">Q: How does CyberGuard calculate crack time?</span>
+              <i class="fa-solid fa-chevron-down text-cyan-400 ml-auto text-xs"></i>
+            </div>
+            <div class="faq-answer text-sm text-slate-300 mt-2 hidden">
+              <i class="fa-solid fa-robot text-cyan-400 mr-1"></i>
+              We use entropy-based calculations considering password length, character variety, and modern computing power (assuming 1 billion guesses per second from a GPU cluster).
+            </div>
+          </div>
+
+          <div class="faq-item bg-slate-900/50 border border-slate-700 rounded-xl p-3" data-category="security">
+            <div class="flex items-center gap-2 mb-1 cursor-pointer faq-question">
+              <i class="fa-solid fa-question text-fuchsia-400"></i>
+              <span class="text-xs font-semibold">Q: Should I use password managers?</span>
+              <i class="fa-solid fa-chevron-down text-cyan-400 ml-auto text-xs"></i>
+            </div>
+            <div class="faq-answer text-sm text-slate-300 mt-2 hidden">
+              <i class="fa-solid fa-robot text-cyan-400 mr-1"></i>
+              Yes! Password managers can generate and store complex, unique passwords for each of your accounts, significantly improving your overall security posture.
+            </div>
+          </div>
+
+          <div class="faq-item bg-slate-900/50 border border-slate-700 rounded-xl p-3" data-category="general">
+            <div class="flex items-center gap-2 mb-1 cursor-pointer faq-question">
+              <i class="fa-solid fa-question text-fuchsia-400"></i>
+              <span class="text-xs font-semibold">Q: Is CyberGuard storing my passwords?</span>
+              <i class="fa-solid fa-chevron-down text-cyan-400 ml-auto text-xs"></i>
+            </div>
+            <div class="faq-answer text-sm text-slate-300 mt-2 hidden">
+              <i class="fa-solid fa-robot text-cyan-400 mr-1"></i>
+              No! All password analysis happens locally in your browser. We never transmit, store, or have access to your passwords. Your security is our priority.
+            </div>
+          </div>
+
+          <div class="faq-item bg-slate-900/50 border border-slate-700 rounded-xl p-3" data-category="features">
+            <div class="flex items-center gap-2 mb-1 cursor-pointer faq-question">
+              <i class="fa-solid fa-question text-fuchsia-400"></i>
+              <span class="text-xs font-semibold">Q: What is "search space" in password analysis?</span>
+              <i class="fa-solid fa-chevron-down text-cyan-400 ml-auto text-xs"></i>
+            </div>
+            <div class="faq-answer text-sm text-slate-300 mt-2 hidden">
+              <i class="fa-solid fa-robot text-cyan-400 mr-1"></i>
+              Search space represents the total number of possible password combinations based on length and character set. A larger search space means more guesses are needed to crack the password.
+            </div>
+          </div>
+        </div>
+
+        <!-- Ask New Question -->
+        <div class="mt-6 pt-6 border-t border-slate-700/50">
+          <h3 class="text-sm font-semibold mb-3 text-cyan-300">
+            <i class="fa-solid fa-plus-circle mr-2"></i>Ask a New Question
+          </h3>
+          <input id="faqInput" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 mb-3 text-sm focus:border-cyan-500/50"
+            placeholder="Type your question about password security...">
+          <button id="submitFaq" class="bg-gradient-to-r from-fuchsia-600 to-purple-600 px-4 py-2 rounded-lg hover:from-fuchsia-700 hover:to-purple-700 transition-all">
+            <i class="fa-solid fa-paper-plane mr-2"></i>Submit Question
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 bg-slate-950/90 backdrop-blur-md py-4 text-center">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="text-xs text-slate-500">
+        <i class="fa-solid fa-shield-alt mr-1"></i>© 2025 CyberGuard — Educational Purposes Only
+      </p>
+      <p class="text-xs text-slate-600 mt-1">
+        <i class="fa-solid fa-triangle-exclamation mr-1"></i>This tool is for educational purposes and does not guarantee absolute security
+      </p>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="javsc.js"></script>
 
 </body>
+
 </html>
